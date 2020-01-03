@@ -1,0 +1,5 @@
+<!-- <input type="file" (change)="show($event)" /> -->
+
+<div *ngIf="imgURL">
+  <app-canvas [data]="data" [url]="imgURL" [polygons]="polygons"></app-canvas>
+</div>

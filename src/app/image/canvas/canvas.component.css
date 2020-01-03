@@ -1,0 +1,25 @@
+.flying-btn {
+  position: fixed;
+  right: 25px;
+  bottom: 25px;
+  z-index: 1000;
+}
+.undo {
+  right: 60px;
+}
+
+.clear {
+  right: 95px;
+}
+
+.dropzone {
+  width: 200px;
+  height: 20px;
+  background: blueviolet;
+  margin-bottom: 10px;
+  padding: 10px;
+}
+
+.save {
+  right: 130px;
+}

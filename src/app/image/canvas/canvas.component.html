@@ -1,0 +1,76 @@
+<div class="btn-area">
+  <button mat-raised-button color="accent" (click)="loadImage()">
+    Load picture
+  </button>
+  <button mat-raised-button color="accent" (click)="preview()">
+    Preview
+  </button>
+  <a [routerLink]="['/image']" matButton mat-raised-button>Use other picture</a>
+</div>
+
+<section class="example-section">
+  <mat-slide-toggle
+    class="example-margin"
+    color="primary"
+    [(ngModel)]="polygonMode"
+  >
+    Polygon mode
+  </mat-slide-toggle>
+</section>
+
+<section class="example-section">
+  <mat-slide-toggle
+    class="example-margin"
+    color="accent"
+    [(ngModel)]="tooltipMode"
+  >
+    Tooltip mode
+  </mat-slide-toggle>
+</section>
+
+<div class="canvas"></div>
+<app-preview
+  *ngIf="review"
+  [imgUrl]="imgUrl"
+  [size]="size"
+  [polygons]="polygons"
+>
+</app-preview>
+
+<button
+  title="Undo"
+  class="flying-btn undo"
+  color="primary"
+  (click)="undo()"
+  mat-icon-button
+>
+  <mat-icon>undo</mat-icon>
+</button>
+<button
+  title="Clear"
+  class="flying-btn clear"
+  color="primary"
+  (click)="clear()"
+  mat-icon-button
+>
+  <mat-icon>clear</mat-icon>
+</button>
+<button
+  title="Add tooltip"
+  class="flying-btn save"
+  color="primary"
+  mat-icon-button
+  [disabled]="!valid"
+  (click)="save()"
+>
+  <mat-icon>save</mat-icon>
+</button>
+<button
+  title="Add tooltip"
+  class="flying-btn"
+  color="primary"
+  mat-icon-button
+  (click)="openDialog()"
+>
+  <mat-icon>add_circle</mat-icon>
+</button>

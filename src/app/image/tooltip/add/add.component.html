@@ -1,0 +1,54 @@
+<div class="container">
+  <mat-form-field>
+    <input
+      type="text"
+      matInput
+      placeholder="Tooltip's header"
+      [(ngModel)]="data.header"
+    />
+  </mat-form-field>
+  <mat-form-field>
+    <input
+      type="text"
+      matInput
+      placeholder="Tooltip's content"
+      [(ngModel)]="data.content"
+    />
+  </mat-form-field>
+  <mat-form-field class="example-full-width">
+    <input
+      matInput
+      placeholder="Style"
+      aria-label="Style"
+      [matAutocomplete]="auto"
+      [(ngModel)]="data.style"
+    />
+    <mat-autocomplete #auto="matAutocomplete">
+      <mat-option *ngFor="let style of styles" [value]="style.value">
+        <img
+          class="example-option-img"
+          aria-hidden
+          [src]="style.thumbnail"
+          height="25"
+        />
+        <span>{{ style.name }}</span>
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+
+  <mat-checkbox class="example-margin" [(ngModel)]="data.fixed"
+    >Fixed</mat-checkbox
+  >
+
+  <div mat-dialog-actions>
+    <button mat-button (click)="onNoClick()">No Thanks</button>
+    <button
+      mat-raised-button
+      [disabled]="!isValid"
+      [mat-dialog-close]="data"
+      cdkFocusInitial
+    >
+      Ok
+    </button>
+  </div>
+</div>

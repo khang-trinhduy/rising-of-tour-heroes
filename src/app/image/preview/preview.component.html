@@ -1,0 +1,62 @@
+<div class="preview-container">
+  <div *ngIf="imgUrl; else loading" class="img-area">
+    <svg [attr.width]="width" [attr.height]="height">
+      <defs></defs>
+      <image
+        [attr.href]="imgUrl"
+        [attr.height]="height"
+        [attr.width]="width"
+        [attr.alt]="imgAlt"
+      />
+      <g *ngFor="let polygon of polygons; let i = index">
+        <polygon
+          [attr.id]="polygon._id"
+          #poly
+          (mouseover)="showTooltip(polygon)"
+          (mouseleave)="hideTooltip(polygon)"
+          onmouseover="evt.target.setAttribute('opacity', '0.5');"
+          onmouseout="evt.target.setAttribute('opacity','1)');"
+          style="fill:rgba(129,215,66,0.3)"
+          [attr.points]="polygon.points"
+          (click)="open(polygon.target)"
+          [appDisplay]="polygon.tooltips"
+        />
+        <g *ngFor="let tooltip of polygon.tooltips">
+          <rect
+            [attr.width]="tooltip.width"
+            [attr.height]="tooltip.height"
+            [(attr.x)]="tooltip.x"
+            [(attr.y)]="tooltip.y"
+            [ngStyle]="tooltip.color"
+            [class]="tooltip._id"
+            [ngClass]="{ fixed: tooltip.fixed, tooltip: true }"
+          ></rect>
+          <text
+            [attr.x]="tooltip.header.x"
+            [attr.y]="tooltip.header.y"
+            text-anchor="middle"
+            [attr.style]="tooltip.header.color"
+            [class]="tooltip._id"
+            [ngClass]="{ fixed: tooltip.fixed, 'tooltip-header': true }"
+          >
+            {{ tooltip.header.name }}
+          </text>
+          <text
+            [attr.x]="tooltip.content.x"
+            [attr.y]="tooltip.content.y"
+            text-anchor="middle"
+            [attr.style]="tooltip.content.color"
+            [class]="tooltip._id"
+            [ngClass]="{ fixed: tooltip.fixed, 'tooltip-content': true }"
+          >
+            {{ tooltip.content.name }}
+          </text>
+        </g>
+      </g>
+    </svg>
+  </div>
+</div>
+
+<ng-template #loading>
+  ImgUrl required!
+</ng-template>

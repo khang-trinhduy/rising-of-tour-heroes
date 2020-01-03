@@ -1,0 +1,46 @@
+<mat-form-field>
+  <input matInput [(ngModel)]="name" placeholder="Tooltip's name" />
+</mat-form-field>
+<div></div>
+<div class="row" style="height: auto">
+  <mat-label>
+    Tooltip color
+  </mat-label>
+  <div class="col-md-3">
+    <span
+      [style.background]="tooltipColor"
+      [cpToggle]="true"
+      [cpDialogDisplay]="'inline'"
+      [cpCancelButton]="true"
+      [cpCancelButtonClass]="'btn btn-primary btn-xs'"
+      [(colorPicker)]="tooltipColor"
+    ></span>
+  </div>
+  <div
+    class="color-box"
+    [style.background]="tooltipColor"
+    (click)="selectedColor = 'tooltipColor'"
+  ></div>
+</div>
+<div class="divider"></div>
+<div class="row" style="height: auto">
+  <mat-label>
+    Polygon color
+  </mat-label>
+  <div class="col-md-3">
+    <span
+      [style.background]="tooltipColor1"
+      [cpToggle]="true"
+      [cpDialogDisplay]="'inline'"
+      [cpCancelButton]="true"
+      [cpCancelButtonClass]="'btn btn-primary btn-xs'"
+      [(colorPicker)]="tooltipColor1"
+    ></span>
+  </div>
+  <div
+    class="color-box"
+    [style.background]="tooltipColor"
+    (click)="selectedColor = 'tooltipColor'"
+  ></div>
+</div>
+<button mat-raised-button (click)="save()">Save</button>
