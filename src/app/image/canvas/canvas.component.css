@@ -23,3 +23,9 @@
 .save {
   right: 130px;
 }
+
+.canvas {
+  width: 1366px;
+  height: 768px;
+  object-fit: none;
+}

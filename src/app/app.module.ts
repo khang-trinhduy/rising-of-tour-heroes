@@ -46,6 +46,7 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
 import { DisplayDirective } from './directive/display.directive';
 import {MatSliderModule} from '@angular/material/slider';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import { MyLibModule } from "ngx-my-lib";
 @NgModule({
   providers: [
     { provide: MatDialogRef, useValue: {} },
@@ -64,11 +65,12 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
     ImageDashboardComponent,
     TooltipComponent,
     TooltipAddComponent,
-    DisplayDirective,
+    DisplayDirective
   ],
   exports: [TooltipAddComponent],
   entryComponents: [TooltipAddComponent],
   imports: [
+    MyLibModule,
     NgbModule,
     MatSliderModule,
     MatCheckboxModule,

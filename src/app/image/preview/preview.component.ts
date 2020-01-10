@@ -146,7 +146,7 @@ export class PreviewComponent implements OnInit, AfterViewInit {
           currentY = evt.clientY;
           selectedElement.setAttribute("x", dx);
           selectedElement.setAttribute("y", dy);
-          header.setAttribute("x", dx + 26.140625);
+        header.setAttribute("x", dx + 26.140625);
           header.setAttribute("y", dy + 40.140625);
           content.setAttribute("x", dx + 20.890625);
           content.setAttribute("y", dy + 72.171875);

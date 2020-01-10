@@ -32,6 +32,7 @@
     "ngx-color-picker": "^8.2.0",
     "ngx-dropzone": "^2.2.2",
     "ngx-image-cropper": "^2.0.2",
+    "ngx-my-lib": "^1.0.1",
     "ngx-polygon-draw": "^1.0.3",
     "ngx-tooltip": "0.0.9",
     "rxjs": "~6.4.0",
