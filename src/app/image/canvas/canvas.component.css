@@ -25,7 +25,26 @@
 }
 
 .canvas {
-  width: 1366px;
-  height: 768px;
-  object-fit: none;
+  padding: 1vh;
+  border: 1px solid;
+  width: 1280px;
+  height: 720px;
+  object-fit: contain;
+  flex: 1;
+  max-width: 1280px;
+  max-height: 720px;
+  overflow: scroll;
+  text-align: center;
+  position: relative;
+}
+
+mat-slider {
+  height: 500px;
+}
+
+.canvas-area {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+  align-items: center;
 }

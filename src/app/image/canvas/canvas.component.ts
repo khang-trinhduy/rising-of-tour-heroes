@@ -51,6 +51,9 @@ export class CanvasComponent implements OnInit, AfterViewInit {
   tooltipMode: boolean = false;
   tooltips: Tooltip[] = [];
   highlightColor = "#b3b3b3";
+  zoom = 50;
+  defaultWidth = 1280;
+  defaultHeight = 720;
 
   api = environment.api;
 
@@ -63,6 +66,11 @@ export class CanvasComponent implements OnInit, AfterViewInit {
   ngOnInit() {}
 
   ngAfterViewInit() {}
+
+  zoomer() {
+    var canvas = document.querySelector("canvas");
+    canvas.style.zoom = `${this.zoom * 2}%`;
+  }
 
   mouseUp(event) {
     if (!this.isDragging) {
@@ -274,6 +282,10 @@ export class CanvasComponent implements OnInit, AfterViewInit {
     this.ctx.closePath();
   }
 
+  formatLabel(value: number) {
+    return `${value}%`;
+  }
+
   drawShapes(save: boolean = false) {
     this.clearShape();
     for (let i = 0; i < this.shapes.length; i++) {
@@ -291,7 +303,7 @@ export class CanvasComponent implements OnInit, AfterViewInit {
     this.ctx.clearRect(0, 0, this.canvasWidth, this.canvasHeight);
     return;
   }
-  
+
   preview() {
     this.http
       .get(this.data, {
@@ -338,44 +350,54 @@ export class CanvasComponent implements OnInit, AfterViewInit {
     this.draw(ctx);
   }
 
-  loadImage() {
-    var $canvas, settings, options, image, resize, draw, input, $reset;
-    settings = $.extend(
-      {
-        imageUrl: this.url
-      },
-      options
-    );
-    $canvas = $("<canvas>");
-    this.ctx = $canvas[0].getContext("2d");
-    image = new Image();
-    resize = function() {};
-    $(image).on("load", () => {
-      $canvas.attr("height", image.height).attr("width", image.width);
-      this.size = `${image.width} ${image.height}`;
-      this.canvasWidth = image.width;
-      this.canvasHeight = image.height;
-    });
-    image.src = settings.imageUrl;
-    if (image.loaded) {
-      resize();
-    }
-    $canvas.css({ background: "url(" + image.src + ")" });
-    this.canvas = $canvas;
-    $(".canvas").append($canvas);
+  open(event) {
+    var files = event.target.files;
+    if (files) {
+      let file = files[0];
+      var img = document.createElement("img");
+      var reader = new FileReader();
 
-    $("canvas").on("click", event => {
-      this.mouseClickHandler(event);
-    });
-    var cv = document.getElementsByTagName("canvas")[0];
-    if (cv) {
-      cv.addEventListener("mouseup", event => {
+      reader.onload = (image => {
+        return e => {
+          image.src = e.target.result;
+        };
+      })(img);
+      reader.readAsDataURL(file);
+
+      this.loadImage(img);
+    }
+  }
+
+  loadImage(img: HTMLImageElement) {
+    if (img) {
+      var canvas = document.createElement("canvas");
+      var context = canvas.getContext("2d");
+      this.ctx = context; //TODO remove this
+      canvas.style.objectFit = "contain";
+      img.onload = () => {
+        canvas.width = img.width;
+        canvas.height = img.height;
+        context.drawImage(img, 0, 0);
+      };
+      this.canvas = canvas;
+      var container = document.querySelector(".canvas");
+      container.append(canvas);
+      this.assignEventsHandler(canvas);
+    }
+  }
+
+  assignEventsHandler(canvas: HTMLCanvasElement) {
+    if (canvas) {
+      canvas.onclick = event => {
+        this.mouseClickHandler(event);
+      };
+      canvas.addEventListener("mouseup", event => {
         this.mouseUp(event);
       });
-      cv.addEventListener("mousemove", event => {
+      canvas.addEventListener("mousemove", event => {
         this.mouseMove(event);
       });
-      cv.addEventListener("mousedown", event => {
+      canvas.addEventListener("mousedown", event => {
         this.mouseDown(event);
       });
     } else {
@@ -450,8 +472,8 @@ export class CanvasComponent implements OnInit, AfterViewInit {
     if (!this.polygonMode || this.tooltipMode) {
       return;
     }
-    var x = event.pageX - this.canvasBounding.left;
-    var y = event.pageY - this.canvasBounding.top;
+    var x = event.pageX - this.canvasBounding.left ;
+    var y = event.pageY - this.canvasBounding.top ;
     this.points.push([x, y]);
     this.coords.push(`${x},${y}`);
     this.draw(this.ctx);
