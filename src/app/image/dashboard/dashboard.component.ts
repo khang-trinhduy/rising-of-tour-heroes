@@ -43,7 +43,7 @@ export class ImageDashboardComponent implements OnInit {
             .post(`${this.api}/images`, image, {
               headers: new HttpHeaders({ "Content-type": "application/json" })
             })
-            .subscribe();
+            .subscribe(res => this.images.push(res));
         },
         error => console.log(error),
         () => console.log("completed")

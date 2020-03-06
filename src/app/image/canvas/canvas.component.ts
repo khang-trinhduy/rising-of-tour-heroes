@@ -60,7 +60,15 @@ export class CanvasComponent implements OnInit, AfterViewInit {
     private activeRoute: ActivatedRoute
   ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    window.addEventListener('keypress', (event) => {
+      if (event.keyCode === 9) {
+        this.preview();
+      } else if (event.keyCode === 76) {
+        this.loadImage();
+      }
+    })
+  }
 
   ngAfterViewInit() {}
 
@@ -168,7 +176,7 @@ export class CanvasComponent implements OnInit, AfterViewInit {
 
   between = (front, rear, x) => front <= x && rear >= x;
 
-  mouseDown(event) {
+  mouseDown(event: MouseEvent) {
     var canvas = document.getElementsByTagName("canvas")[0];
     if (canvas) {
       event.preventDefault();
@@ -291,7 +299,7 @@ export class CanvasComponent implements OnInit, AfterViewInit {
     this.ctx.clearRect(0, 0, this.canvasWidth, this.canvasHeight);
     return;
   }
-  
+
   preview() {
     this.http
       .get(this.data, {
@@ -446,13 +454,17 @@ export class CanvasComponent implements OnInit, AfterViewInit {
     ctx.closePath();
   }
 
-  private mouseClickHandler(event) {
+  private mouseClickHandler(event: MouseEvent) {
     if (!this.polygonMode || this.tooltipMode) {
       return;
     }
-    var x = event.pageX - this.canvasBounding.left;
-    var y = event.pageY - this.canvasBounding.top;
-    this.points.push([x, y]);
+    var x = event.clientX - this.canvasBounding.left;
+    var y = event.clientY - this.canvasBounding.top;
+
+    this.points.push([
+      event.clientX - this.canvasBounding.left,
+      event.clientY - this.canvasBounding.top
+    ]);
     this.coords.push(`${x},${y}`);
     this.draw(this.ctx);
   }
