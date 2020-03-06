@@ -1,4 +1,4 @@
-<div class="btn-area">
+<!-- <div class="btn-area">
   <button mat-raised-button color="accent" (click)="loadImage()">
     Load picture
   </button>
@@ -6,6 +6,10 @@
     Preview
   </button>
   <a [routerLink]="['/image']" matButton mat-raised-button>Use other picture</a>
+</div> -->
+
+<div class="menu-header toolbar">
+  <input type="file" class="file-picker" #File (change)="open($event)">
 </div>
 
 <section class="example-section">
@@ -28,7 +32,24 @@
   </mat-slide-toggle>
 </section>
 
-<div class="canvas"></div>
+<div class="canvas-area">
+  <div class="canvas">
+
+  </div>
+  <div class="right-tooltip">
+    <mat-slider
+      max="100"
+      min="0"
+      step="1"
+      thumbLabel="true"
+      [(ngModel)]="zoom"
+      [displayWith]="formatLabel"
+      vertical="true"
+      (change)="zoomer()"
+    >
+    </mat-slider>
+  </div>
+</div>
 <app-preview
   *ngIf="review"
   [imgUrl]="imgUrl"
